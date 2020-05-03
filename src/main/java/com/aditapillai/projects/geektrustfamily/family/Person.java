@@ -68,4 +68,10 @@ public abstract class Person {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", this.name, this instanceof Woman ? "F" : "M");
+    }
+
 }

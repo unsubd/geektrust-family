@@ -2,10 +2,7 @@ package com.aditapillai.projects.geektrustfamily.family;
 
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 class FamilyTree implements Family {
 
@@ -59,6 +56,34 @@ class FamilyTree implements Family {
     @Override
     public boolean contains(String name) {
         return this.memberDirectory.containsKey(name);
+    }
+
+    @Override
+    public String toString() {
+        List<String> result = new LinkedList<>();
+        Queue<Person> people = new LinkedList<>();
+        people.add(this.root);
+
+        //BFS to print all relationships
+
+        while (!people.isEmpty()) {
+            Person person = people.poll();
+            Person spouse = person.getSpouse();
+            StringBuilder partial = new StringBuilder(person.toString());
+
+            if (spouse != null) {
+                partial.append("<==>")
+                       .append(spouse)
+                       .append(spouse.getChildren());
+            }
+            result.add(partial.toString());
+            people.addAll(person.getChildren());
+        }
+
+        return result.stream()
+                     .map(line -> new StringBuilder(line).append("\n"))
+                     .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                     .toString();
     }
 
 }

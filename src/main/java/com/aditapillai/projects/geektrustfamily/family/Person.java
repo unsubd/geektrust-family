@@ -1,18 +1,15 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
 import java.util.Objects;
+import java.util.Set;
 
-abstract class Person {
-    final String name;
+public abstract class Person {
+    public final String name;
     private Person spouse;
 
     protected Person(String name) {
         Objects.requireNonNull(name);
         this.name = name;
-    }
-
-    Person getSpouse() {
-        return spouse;
     }
 
     void marry(Person spouse) {
@@ -21,6 +18,41 @@ abstract class Person {
             spouse.marry(this);
         }
     }
+
+    public abstract Set<Person> getChildren();
+
+    public Person getSpouse() {
+        return spouse;
+    }
+
+    public static Person.Builder builder() {
+        return new Builder();
+    }
+
+
+    public static class Builder {
+        private String name;
+        private Gender gender;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder gender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Person build() {
+            if (this.gender == Gender.M) {
+                return new Man(this.name);
+            } else {
+                return new Woman(this.name);
+            }
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {

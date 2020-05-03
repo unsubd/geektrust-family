@@ -14,8 +14,8 @@ class Woman extends Person {
         this.children.add(child);
     }
 
-    Set<Person> getChildren() {
-        return this.children;
+    public Set<Person> getChildren() {
+        return new HashSet<>(this.children);
     }
 
 }

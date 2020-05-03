@@ -3,6 +3,7 @@ package com.aditapillai.projects.geektrustfamily.family;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 class FamilyTree implements Family {
 
@@ -17,21 +18,24 @@ class FamilyTree implements Family {
 
     @Override
     public void addChild(String motherName, String childName, Gender childGender) {
-        if (this.memberDirectory.containsKey(motherName)) {
-            Person person = this.memberDirectory.get(motherName);
-            if (person instanceof Woman) {
-                Woman mother = (Woman) person;
-                Person child;
-
-                if (childGender == Gender.F) {
-                    child = new Woman(childName);
-                } else {
-                    child = new Man(childName);
-                }
-                mother.addChild(child);
-                this.memberDirectory.put(childName, child);
-            }
+        if (!this.contains(motherName)) {
+            throw new RuntimeException(String.format("Person with name %s not found", motherName));
         }
+        Optional.of(this.memberDirectory.get(motherName))
+                .filter(person -> person instanceof Woman)
+                .map(person -> (Woman) person)
+                .map(mother -> addChildToMother(mother, childName, childGender))
+                .orElseThrow(() -> new RuntimeException(String.format("Person with name %s not a mother", motherName)));
+    }
+
+    private Woman addChildToMother(Woman mother, String childName, Gender childGender) {
+        Person child = Person.builder()
+                             .name(childName)
+                             .gender(childGender)
+                             .build();
+        mother.addChild(child);
+        this.memberDirectory.put(childName, child);
+        return mother;
     }
 
     @Override

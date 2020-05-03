@@ -4,6 +4,7 @@ import com.aditapillai.projects.geektrustfamily.constants.Gender;
 import com.aditapillai.projects.geektrustfamily.errors.Errors;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class FamilyTree implements Family {
 
@@ -28,6 +29,17 @@ class FamilyTree implements Family {
                 .orElseThrow(() -> new RuntimeException(Errors.CHILD_ADDITION_FAILED_ERROR_MESSAGE));
     }
 
+    @Override
+    public Optional<Set<String>> getSonsOf(String name) {
+        return Optional.ofNullable(this.memberDirectory.get(name))
+                       .map(Person::getChildren)
+                       .map(children -> children.stream()
+                                                .filter(person -> person instanceof Man)
+                                                .map(person -> person.name)
+                                                .collect(Collectors.toSet()))
+                       .filter(children -> !children.isEmpty());
+    }
+
     private Woman addChildToMother(Woman mother, String childName, Gender childGender) {
         Person child = Person.builder()
                              .name(childName)
@@ -38,11 +50,6 @@ class FamilyTree implements Family {
         mother.addChild(child);
         this.memberDirectory.put(childName, child);
         return mother;
-    }
-
-    @Override
-    public String getRelative(String name, String relationship) {
-        return null;
     }
 
     @Override

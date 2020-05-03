@@ -2,10 +2,13 @@ package com.aditapillai.projects.geektrustfamily.family;
 
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
 
+import java.util.Optional;
+import java.util.Set;
+
 public interface Family {
     void addChild(String motherName, String childName, Gender childGender);
 
-    String getRelative(String name, String relationship);
+    Optional<Set<String>> getSonsOf(String name);
 
     void hostWedding(String husbandName, String wifeName);
 

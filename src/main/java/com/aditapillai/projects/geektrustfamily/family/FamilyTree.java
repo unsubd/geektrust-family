@@ -20,9 +20,7 @@ class FamilyTree implements Family {
 
     @Override
     public void addChild(String motherName, String childName, Gender childGender) {
-        if (!this.contains(motherName)) {
-            throw new ApiException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);
-        }
+        this.validateName(motherName);
         Optional.of(this.memberDirectory.get(motherName))
                 .filter(person -> person instanceof Woman)
                 .map(person -> (Woman) person)
@@ -32,6 +30,7 @@ class FamilyTree implements Family {
 
     @Override
     public Optional<Set<String>> getSonsOf(String name) {
+        this.validateName(name);
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .map(Person::getChildren)
                        .map(children -> children.stream()
@@ -43,6 +42,7 @@ class FamilyTree implements Family {
 
     @Override
     public Optional<Set<String>> getDaughtersOf(String name) {
+        this.validateName(name);
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .map(Person::getChildren)
                        .map(children -> children.stream()
@@ -54,6 +54,7 @@ class FamilyTree implements Family {
 
     @Override
     public Optional<Set<String>> getSiblingsOf(String name) {
+        this.validateName(name);
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .flatMap(person -> Optional.ofNullable(person.mother))
                        .map(Person::getChildren)
@@ -67,6 +68,7 @@ class FamilyTree implements Family {
 
     @Override
     public Optional<String> getMotherOf(String name) {
+        this.validateName(name);
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .flatMap(person -> Optional.ofNullable(person.mother))
                        .map(person -> person.name);
@@ -74,9 +76,16 @@ class FamilyTree implements Family {
 
     @Override
     public Optional<String> getFatherOf(String name) {
+        this.validateName(name);
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .flatMap(person -> Optional.ofNullable(person.father))
                        .map(person -> person.name);
+    }
+
+    private void validateName(String name) {
+        if (!this.contains(name)) {
+            throw new ApiException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);
+        }
     }
 
     private Woman addChildToMother(Woman mother, String childName, Gender childGender) {

@@ -35,7 +35,7 @@ class FamilyTree implements Family {
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .map(Person::getChildren)
                        .map(children -> children.stream()
-                                                .filter(this::isMale)
+                                                .filter(Person::isMale)
                                                 .map(person -> person.name)
                                                 .collect(Collectors.toSet()))
                        .filter(children -> !children.isEmpty());
@@ -46,7 +46,7 @@ class FamilyTree implements Family {
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .map(Person::getChildren)
                        .map(children -> children.stream()
-                                                .filter(this::isFemale)
+                                                .filter(Person::isFemale)
                                                 .map(person -> person.name)
                                                 .collect(Collectors.toSet()))
                        .filter(children -> !children.isEmpty());
@@ -63,14 +63,6 @@ class FamilyTree implements Family {
                                                 .collect(Collectors.toSet()))
                        .filter(children -> !children.isEmpty());
 
-    }
-
-    private boolean isMale(Person person) {
-        return person instanceof Man;
-    }
-
-    private boolean isFemale(Person person) {
-        return person instanceof Woman;
     }
 
     private Woman addChildToMother(Woman mother, String childName, Gender childGender) {

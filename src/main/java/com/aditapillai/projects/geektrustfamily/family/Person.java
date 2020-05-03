@@ -44,6 +44,14 @@ public abstract class Person {
         return spouse;
     }
 
+    public boolean isMale() {
+        return this instanceof Man;
+    }
+
+    public boolean isFemale() {
+        return this instanceof Woman;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -109,6 +109,33 @@ class FamilyTree implements Family {
 
     }
 
+    @Override
+    public Optional<Set<String>> getPaternalAuntsOf(String name) {
+        this.validateName(name);
+        return Optional.of(this.memberDirectory.get(name))
+                       .flatMap(person -> Optional.ofNullable(person.father))
+                       .flatMap(person -> Optional.ofNullable(person.father))
+                       .map(person -> person.getChildren()
+                                            .stream()
+                                            .filter(Person::isFemale)
+                                            .map(child -> child.name)
+                                            .collect(Collectors.toSet()));
+    }
+
+    @Override
+    public Optional<Set<String>> getMaternalAuntsOf(String name) {
+        this.validateName(name);
+        return Optional.of(this.memberDirectory.get(name))
+                       .flatMap(person -> Optional.ofNullable(person.mother))
+                       .flatMap(person -> Optional.ofNullable(person.mother))
+                       .map(person -> person.getChildren()
+                                            .stream()
+                                            .filter(Person::isFemale)
+                                            .map(child -> child.name)
+                                            .collect(Collectors.toSet()));
+
+    }
+
     private void validateName(String name) {
         if (!this.contains(name)) {
             throw new ApiException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);

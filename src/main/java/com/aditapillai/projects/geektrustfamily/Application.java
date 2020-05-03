@@ -13,5 +13,9 @@ public class Application {
         System.out.println(family.getDaughtersOf("King Shan")
                                  .map(StringUtils::collectionToSpaceSeparatedString)
                                  .orElse("NONE"));
+
+        System.out.println(family.getSiblingsOf("Satya")
+                                 .map(StringUtils::collectionToSpaceSeparatedString)
+                                 .orElse("NONE"));
     }
 }

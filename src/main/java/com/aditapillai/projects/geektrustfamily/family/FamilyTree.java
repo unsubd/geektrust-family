@@ -51,6 +51,19 @@ class FamilyTree implements Family {
                        .filter(children -> !children.isEmpty());
     }
 
+    @Override
+    public Optional<Set<String>> getSiblingsOf(String name) {
+        return Optional.ofNullable(this.memberDirectory.get(name))
+                       .flatMap(person -> Optional.ofNullable(person.mother))
+                       .map(Person::getChildren)
+                       .map(children -> children.stream()
+                                                .map(person -> person.name)
+                                                .filter(person -> !person.equals(name))
+                                                .collect(Collectors.toSet()))
+                       .filter(children -> !children.isEmpty());
+
+    }
+
     private boolean isMale(Person person) {
         return person instanceof Man;
     }

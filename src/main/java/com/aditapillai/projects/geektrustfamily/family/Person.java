@@ -1,6 +1,7 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
+import com.aditapillai.projects.geektrustfamily.errors.Errors;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,11 +12,19 @@ public abstract class Person {
     public final Woman mother;
     private Person spouse;
 
-    protected Person(String name, Man father, Woman mother) {
+    protected Person(String name, Person father, Person mother) {
         Objects.requireNonNull(name);
         this.name = name;
-        this.father = father;
-        this.mother = mother;
+
+        if (father != null && !(father instanceof Man)) {
+            throw new RuntimeException(Errors.FATHER_SHOULD_BE_A_MAN_ERROR_MESSAGE);
+        }
+        if (mother != null && !(mother instanceof Woman)) {
+            throw new RuntimeException(Errors.MOTHER_SHOULD_BE_A_WOMAN_ERROR_MESSAGE);
+        }
+
+        this.father = (Man) father;
+        this.mother = (Woman) mother;
     }
 
     public static Person.Builder builder() {

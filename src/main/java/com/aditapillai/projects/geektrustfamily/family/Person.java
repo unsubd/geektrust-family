@@ -8,10 +8,10 @@ import java.util.Set;
 public abstract class Person {
     public final String name;
     private Person spouse;
-    private final Person father;
-    private final Person mother;
+    private final Man father;
+    private final Woman mother;
 
-    protected Person(String name, Person father, Person mother) {
+    protected Person(String name, Man father, Woman mother) {
         Objects.requireNonNull(name);
         this.name = name;
         this.father = father;

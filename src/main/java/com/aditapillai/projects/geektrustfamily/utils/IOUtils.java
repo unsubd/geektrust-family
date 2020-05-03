@@ -8,7 +8,6 @@ import com.aditapillai.projects.geektrustfamily.family.Person;
 public class IOUtils {
     private static final String INIT_FILE_PATH = "init/family.txt";
 
-    //    Jaya(M)==Dritha(F)[Yodhan(M)]
     public static Family initializeFamily() {
         Person kingShan = Person.builder()
                                 .name("King Shan")
@@ -16,6 +15,7 @@ public class IOUtils {
                                 .build();
 
         Family family = Families.createFamily(kingShan);
+
 //        King_Shan(M)==Queen_Anga(F)[Chit(M),Ish(M),Vich(M),Aras(M),Satya(F)]
         family.hostWedding(kingShan.name, "Queen Anga");
         family.addChild("Queen Anga", "Chit", Gender.M);

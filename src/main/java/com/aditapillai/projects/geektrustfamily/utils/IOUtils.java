@@ -45,7 +45,7 @@ public class IOUtils {
         family.addChild("Jnki", "Laki", Gender.M);
         family.addChild("Jnki", "Lavnya", Gender.F);
 
-//        Vyan(M)==Stya(F)[Asva(M),Vyas(M),Atya(F)]
+//        Vyan(M)==Satya(F)[Asva(M),Vyas(M),Atya(F)]
         family.hostWedding("Vyan", "Satya");
         family.addChild("Satya", "Asva", Gender.M);
         family.addChild("Satya", "Vyas", Gender.M);

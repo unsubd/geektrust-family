@@ -1,5 +1,7 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
+import com.aditapillai.projects.geektrustfamily.constants.Gender;
+
 import java.util.Objects;
 import java.util.Set;
 

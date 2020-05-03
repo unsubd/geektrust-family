@@ -31,6 +31,8 @@ class FamilyTree implements Family {
         Person child = Person.builder()
                              .name(childName)
                              .gender(childGender)
+                             .father(mother.getSpouse())
+                             .mother(mother)
                              .build();
         mother.addChild(child);
         this.memberDirectory.put(childName, child);
@@ -44,8 +46,14 @@ class FamilyTree implements Family {
 
     @Override
     public void hostWedding(String husbandName, String wifeName) {
-        Person husband = this.memberDirectory.getOrDefault(husbandName, new Man(husbandName));
-        Person wife = this.memberDirectory.getOrDefault(wifeName, new Woman(wifeName));
+        Person husband = this.memberDirectory.getOrDefault(husbandName, Person.builder()
+                                                                              .name(husbandName)
+                                                                              .gender(Gender.M)
+                                                                              .build());
+        Person wife = this.memberDirectory.getOrDefault(wifeName, Person.builder()
+                                                                        .name(wifeName)
+                                                                        .gender(Gender.F)
+                                                                        .build());
         husband.marry(wife);
 
         this.memberDirectory.put(husbandName, husband);

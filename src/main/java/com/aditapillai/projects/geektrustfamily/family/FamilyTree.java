@@ -1,6 +1,7 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
+import com.aditapillai.projects.geektrustfamily.errors.Errors;
 
 import java.util.*;
 
@@ -18,13 +19,13 @@ class FamilyTree implements Family {
     @Override
     public void addChild(String motherName, String childName, Gender childGender) {
         if (!this.contains(motherName)) {
-            throw new RuntimeException(String.format("Person with name %s not found", motherName));
+            throw new RuntimeException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);
         }
         Optional.of(this.memberDirectory.get(motherName))
                 .filter(person -> person instanceof Woman)
                 .map(person -> (Woman) person)
                 .map(mother -> addChildToMother(mother, childName, childGender))
-                .orElseThrow(() -> new RuntimeException(String.format("Person with name %s not a mother", motherName)));
+                .orElseThrow(() -> new RuntimeException(Errors.CHILD_ADDITION_FAILED_ERROR_MESSAGE));
     }
 
     private Woman addChildToMother(Woman mother, String childName, Gender childGender) {

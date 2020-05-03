@@ -6,8 +6,8 @@ import java.util.*;
 
 class FamilyTree implements Family {
 
-    private Person root;
     private final Map<String, Person> memberDirectory = new HashMap<>();
+    private final Person root;
 
     FamilyTree(Person origin) {
         Objects.requireNonNull(origin);

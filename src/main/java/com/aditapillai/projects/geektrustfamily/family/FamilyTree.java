@@ -52,7 +52,7 @@ class FamilyTree implements Family {
 
     @Override
     public boolean contains(String name) {
-        return false;
+        return this.memberDirectory.containsKey(name);
     }
 
 }

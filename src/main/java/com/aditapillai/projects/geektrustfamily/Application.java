@@ -28,6 +28,10 @@ public class Application {
                                  .map(StringUtils::collectionToSpaceSeparatedString)
                                  .orElse("NONE"));
 
+        System.out.println(family.getMaternalUnclesOf("Yodhan")
+                                 .map(StringUtils::collectionToSpaceSeparatedString)
+                                 .orElse("NONE"));
+
 
     }
 }

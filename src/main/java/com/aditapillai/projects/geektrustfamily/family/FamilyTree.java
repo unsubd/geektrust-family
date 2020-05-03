@@ -85,7 +85,6 @@ class FamilyTree implements Family {
     @Override
     public Optional<Set<String>> getPaternalUnclesOf(String name) {
         this.validateName(name);
-
         return Optional.of(this.memberDirectory.get(name))
                        .flatMap(person -> Optional.ofNullable(person.father))
                        .flatMap(person -> Optional.ofNullable(person.father))
@@ -94,6 +93,20 @@ class FamilyTree implements Family {
                                             .filter(Person::isMale)
                                             .map(child -> child.name)
                                             .collect(Collectors.toSet()));
+    }
+
+    @Override
+    public Optional<Set<String>> getMaternalUnclesOf(String name) {
+        this.validateName(name);
+        return Optional.of(this.memberDirectory.get(name))
+                       .flatMap(person -> Optional.ofNullable(person.mother))
+                       .flatMap(person -> Optional.ofNullable(person.mother))
+                       .map(person -> person.getChildren()
+                                            .stream()
+                                            .filter(Person::isMale)
+                                            .map(child -> child.name)
+                                            .collect(Collectors.toSet()));
+
     }
 
     private void validateName(String name) {

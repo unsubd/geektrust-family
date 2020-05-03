@@ -24,6 +24,10 @@ public class Application {
         System.out.println(family.getFatherOf("Satya")
                                  .orElse("NONE"));
 
+        System.out.println(family.getPaternalUnclesOf("Jnki")
+                                 .map(StringUtils::collectionToSpaceSeparatedString)
+                                 .orElse("NONE"));
+
 
     }
 }

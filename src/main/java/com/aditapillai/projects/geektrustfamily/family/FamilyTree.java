@@ -82,6 +82,20 @@ class FamilyTree implements Family {
                        .map(person -> person.name);
     }
 
+    @Override
+    public Optional<Set<String>> getPaternalUnclesOf(String name) {
+        this.validateName(name);
+
+        return Optional.of(this.memberDirectory.get(name))
+                       .flatMap(person -> Optional.ofNullable(person.father))
+                       .flatMap(person -> Optional.ofNullable(person.father))
+                       .map(person -> person.getChildren()
+                                            .stream()
+                                            .filter(Person::isMale)
+                                            .map(child -> child.name)
+                                            .collect(Collectors.toSet()));
+    }
+
     private void validateName(String name) {
         if (!this.contains(name)) {
             throw new ApiException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);

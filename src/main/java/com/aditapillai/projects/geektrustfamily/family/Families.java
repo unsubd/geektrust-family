@@ -10,7 +10,4 @@ public class Families {
                                     .build());
     }
 
-    public static Family createFamily(Person origin) {
-        return new FamilyTree(origin);
-    }
 }

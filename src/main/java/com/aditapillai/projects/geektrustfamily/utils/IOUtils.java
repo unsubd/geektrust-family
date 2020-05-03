@@ -3,20 +3,14 @@ package com.aditapillai.projects.geektrustfamily.utils;
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
 import com.aditapillai.projects.geektrustfamily.family.Families;
 import com.aditapillai.projects.geektrustfamily.family.Family;
-import com.aditapillai.projects.geektrustfamily.family.Person;
 
 public class IOUtils {
 
     public static Family initializeFamily() {
-        Person kingShan = Person.builder()
-                                .name("King Shan")
-                                .gender(Gender.M)
-                                .build();
-
-        Family family = Families.createFamily(kingShan);
+        Family family = Families.createFamily("King Shan", Gender.M);
 
 //        King_Shan(M)==Queen_Anga(F)[Chit(M),Ish(M),Vich(M),Aras(M),Satya(F)]
-        family.hostWedding(kingShan.name, "Queen Anga");
+        family.hostWedding("King Shan", "Queen Anga");
         family.addChild("Queen Anga", "Chit", Gender.M);
         family.addChild("Queen Anga", "Ish", Gender.M);
         family.addChild("Queen Anga", "Vich", Gender.M);

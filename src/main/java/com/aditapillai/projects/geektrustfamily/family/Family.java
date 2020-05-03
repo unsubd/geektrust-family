@@ -14,6 +14,10 @@ public interface Family {
 
     Optional<Set<String>> getSiblingsOf(String name);
 
+    Optional<String> getMotherOf(String name);
+
+    Optional<String> getFatherOf(String name);
+
     void hostWedding(String husbandName, String wifeName);
 
     boolean contains(String name);

@@ -17,5 +17,13 @@ public class Application {
         System.out.println(family.getSiblingsOf("Satya")
                                  .map(StringUtils::collectionToSpaceSeparatedString)
                                  .orElse("NONE"));
+
+        System.out.println(family.getMotherOf("Satya")
+                                 .orElse("NONE"));
+
+        System.out.println(family.getFatherOf("Satya")
+                                 .orElse("NONE"));
+
+
     }
 }

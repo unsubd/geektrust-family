@@ -1,5 +1,7 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 class Man extends Person {
@@ -9,7 +11,8 @@ class Man extends Person {
 
     @Override
     public Set<Person> getChildren() {
-        return this.getSpouse()
-                   .getChildren();
+        return Optional.ofNullable(this.getSpouse())
+                       .map(Person::getChildren)
+                       .orElse(new HashSet<>());
     }
 }

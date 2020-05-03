@@ -8,10 +8,14 @@ import java.util.Set;
 public abstract class Person {
     public final String name;
     private Person spouse;
+    private final Person father;
+    private final Person mother;
 
-    protected Person(String name) {
+    protected Person(String name, Person father, Person mother) {
         Objects.requireNonNull(name);
         this.name = name;
+        this.father = father;
+        this.mother = mother;
     }
 
     public static Person.Builder builder() {
@@ -52,6 +56,8 @@ public abstract class Person {
     public static class Builder {
         private String name;
         private Gender gender;
+        private Person father;
+        private Person mother;
 
         public Builder name(String name) {
             this.name = name;
@@ -63,12 +69,25 @@ public abstract class Person {
             return this;
         }
 
+        public Builder father(Person father) {
+            this.father = father;
+            return this;
+        }
+
+        public Builder mother(Person mother) {
+            this.mother = mother;
+            return this;
+        }
+
         public Person build() {
+            Person person;
             if (this.gender == Gender.M) {
-                return new Man(this.name);
+                person = new Man(this.name, this.father, this.mother);
             } else {
-                return new Woman(this.name);
+                person = new Woman(this.name, this.father, this.mother);
             }
+
+            return person;
         }
     }
 

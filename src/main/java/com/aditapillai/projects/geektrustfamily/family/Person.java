@@ -7,9 +7,9 @@ import java.util.Set;
 
 public abstract class Person {
     public final String name;
+    public final Man father;
+    public final Woman mother;
     private Person spouse;
-    private final Man father;
-    private final Woman mother;
 
     protected Person(String name, Man father, Woman mother) {
         Objects.requireNonNull(name);

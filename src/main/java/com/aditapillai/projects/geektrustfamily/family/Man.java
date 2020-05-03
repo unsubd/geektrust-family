@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 class Man extends Person {
-    Man(String name, Person father, Person mother) {
+    Man(String name, Man father, Woman mother) {
         super(name, father, mother);
     }
 

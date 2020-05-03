@@ -6,7 +6,7 @@ import java.util.Set;
 class Woman extends Person {
     private final Set<Person> children = new HashSet<>();
 
-    Woman(String name, Person father, Person mother) {
+    Woman(String name, Man father, Woman mother) {
         super(name, father, mother);
     }
 

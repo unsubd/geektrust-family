@@ -34,10 +34,29 @@ class FamilyTree implements Family {
         return Optional.ofNullable(this.memberDirectory.get(name))
                        .map(Person::getChildren)
                        .map(children -> children.stream()
-                                                .filter(person -> person instanceof Man)
+                                                .filter(this::isMale)
                                                 .map(person -> person.name)
                                                 .collect(Collectors.toSet()))
                        .filter(children -> !children.isEmpty());
+    }
+
+    @Override
+    public Optional<Set<String>> getDaughtersOf(String name) {
+        return Optional.ofNullable(this.memberDirectory.get(name))
+                       .map(Person::getChildren)
+                       .map(children -> children.stream()
+                                                .filter(this::isFemale)
+                                                .map(person -> person.name)
+                                                .collect(Collectors.toSet()))
+                       .filter(children -> !children.isEmpty());
+    }
+
+    private boolean isMale(Person person) {
+        return person instanceof Man;
+    }
+
+    private boolean isFemale(Person person) {
+        return person instanceof Woman;
     }
 
     private Woman addChildToMother(Woman mother, String childName, Gender childGender) {

@@ -6,7 +6,6 @@ import com.aditapillai.projects.geektrustfamily.family.Family;
 import com.aditapillai.projects.geektrustfamily.family.Person;
 
 public class IOUtils {
-    private static final String INIT_FILE_PATH = "init/family.txt";
 
     public static Family initializeFamily() {
         Person kingShan = Person.builder()

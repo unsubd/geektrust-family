@@ -6,6 +6,7 @@ import com.aditapillai.projects.geektrustfamily.errors.Errors;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class FamilyTree implements Family {
 
@@ -134,6 +135,31 @@ class FamilyTree implements Family {
                                             .map(child -> child.name)
                                             .collect(Collectors.toSet()));
 
+    }
+
+    @Override
+    public Optional<Set<String>> getSistersInLawOf(String name) {
+        this.validateName(name);
+        Person currentPerson = this.memberDirectory.get(name);
+        Stream<Person> sistersOfSpouse = Optional.of(currentPerson)
+                                                 .flatMap(person -> Optional.ofNullable(person.getSpouse()))
+                                                 .flatMap(spouse -> Optional.ofNullable(spouse.mother))
+                                                 .map(mother -> mother.getChildren()
+                                                                      .stream()
+                                                                      .filter(Person::isFemale))
+                                                 .orElse(Stream.empty());
+        Stream<Person> wivesOfSiblings = Optional.of(currentPerson)
+                                                 .flatMap(person -> Optional.ofNullable(person.mother))
+                                                 .map(mother -> mother.getChildren()
+                                                                      .stream()
+                                                                      .filter(Person::isMale)
+                                                                      .map(Person::getSpouse)
+                                                                      .filter(Objects::nonNull))
+                                                 .orElse(Stream.empty());
+
+        return Optional.of(Stream.concat(sistersOfSpouse, wivesOfSiblings)
+                                 .map(person -> person.name)
+                                 .collect(Collectors.toSet()));
     }
 
     private void validateName(String name) {

@@ -32,6 +32,9 @@ public class Application {
                                  .map(StringUtils::collectionToSpaceSeparatedString)
                                  .orElse("NONE"));
 
+        System.out.println(family.getSistersInLawOf("Satya")
+                                 .map(StringUtils::collectionToSpaceSeparatedString)
+                                 .orElse("NONE"));
 
     }
 }

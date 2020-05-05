@@ -4,6 +4,11 @@ import com.aditapillai.projects.geektrustfamily.constants.Gender;
 import com.aditapillai.projects.geektrustfamily.family.Families;
 import com.aditapillai.projects.geektrustfamily.family.Family;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class IOUtils {
 
     public static Family initializeFamily() {
@@ -58,6 +63,10 @@ public class IOUtils {
         family.addChild("Krpi", "Krithi", Gender.F);
 
         return family;
+    }
+
+    public static List<String> readInput(String inputPath) throws IOException {
+        return Files.readAllLines(Paths.get(inputPath));
     }
 
 }

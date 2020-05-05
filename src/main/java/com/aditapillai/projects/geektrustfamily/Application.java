@@ -36,5 +36,9 @@ public class Application {
                                  .map(StringUtils::collectionToSpaceSeparatedString)
                                  .orElse("NONE"));
 
+        System.out.println(family.getBrothersInLawOf("Arit")
+                                 .map(StringUtils::collectionToSpaceSeparatedString)
+                                 .orElse("NONE"));
+
     }
 }

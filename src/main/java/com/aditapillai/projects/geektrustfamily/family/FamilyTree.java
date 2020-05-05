@@ -152,6 +152,7 @@ class FamilyTree implements Family {
                                                  .flatMap(person -> Optional.ofNullable(person.mother))
                                                  .map(mother -> mother.getChildren()
                                                                       .stream()
+                                                                      .filter(person -> !currentPerson.equals(person))
                                                                       .filter(Person::isMale)
                                                                       .map(Person::getSpouse)
                                                                       .filter(Objects::nonNull))
@@ -159,7 +160,35 @@ class FamilyTree implements Family {
 
         return Optional.of(Stream.concat(sistersOfSpouse, wivesOfSiblings)
                                  .map(person -> person.name)
-                                 .collect(Collectors.toSet()));
+                                 .collect(Collectors.toSet()))
+                       .filter(result -> !result.isEmpty());
+    }
+
+    @Override
+    public Optional<Set<String>> getBrothersInLawOf(String name) {
+        this.validateName(name);
+        Person currentPerson = this.memberDirectory.get(name);
+        Stream<Person> brothersOfSpouse = Optional.of(currentPerson)
+                                                  .flatMap(person -> Optional.ofNullable(person.getSpouse()))
+                                                  .flatMap(spouse -> Optional.ofNullable(spouse.mother))
+                                                  .map(mother -> mother.getChildren()
+                                                                       .stream()
+                                                                       .filter(Person::isMale))
+                                                  .orElse(Stream.empty());
+        Stream<Person> husbandsOfSiblings = Optional.of(currentPerson)
+                                                    .flatMap(person -> Optional.ofNullable(person.mother))
+                                                    .map(mother -> mother.getChildren()
+                                                                         .stream()
+                                                                         .filter(person -> !currentPerson.equals(person))
+                                                                         .filter(Person::isFemale)
+                                                                         .map(Person::getSpouse)
+                                                                         .filter(Objects::nonNull))
+                                                    .orElse(Stream.empty());
+
+        return Optional.of(Stream.concat(brothersOfSpouse, husbandsOfSiblings)
+                                 .map(person -> person.name)
+                                 .collect(Collectors.toSet()))
+                       .filter(result -> !result.isEmpty());
     }
 
     private void validateName(String name) {

@@ -28,6 +28,8 @@ public interface Family {
 
     Optional<Set<String>> getSistersInLawOf(String name);
 
+    Optional<Set<String>> getBrothersInLawOf(String name);
+
 
     void hostWedding(String husbandName, String wifeName);
 

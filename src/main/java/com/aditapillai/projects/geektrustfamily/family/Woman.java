@@ -1,10 +1,11 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 class Woman extends Person {
-    private final Set<Person> children = new HashSet<>();
+    private final Set<Person> children = new LinkedHashSet<>();
 
     Woman(String name, Person father, Person mother) {
         super(name, father, mother);

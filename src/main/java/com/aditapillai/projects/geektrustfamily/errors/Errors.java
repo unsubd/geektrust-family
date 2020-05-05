@@ -5,4 +5,5 @@ public interface Errors {
     String CHILD_ADDITION_FAILED_ERROR_MESSAGE = "CHILD_ADDITION_FAILED";
     String FATHER_SHOULD_BE_A_MAN_ERROR_MESSAGE = "Father should be a Man";
     String MOTHER_SHOULD_BE_A_WOMAN_ERROR_MESSAGE = "Mother should be a Woman";
+    String UNKNOWN_OPERATION_ERROR_MESSAGE = "UNSUPPORTED_OPERATION";
 }

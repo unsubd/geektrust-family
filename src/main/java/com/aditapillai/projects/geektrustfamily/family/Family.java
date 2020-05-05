@@ -14,10 +14,6 @@ public interface Family {
 
     Optional<? extends Set<String>> getSiblingsOf(String name);
 
-    Optional<String> getMotherOf(String name);
-
-    Optional<String> getFatherOf(String name);
-
     Optional<? extends Set<String>> getPaternalUnclesOf(String name);
 
     Optional<? extends Set<String>> getMaternalUnclesOf(String name);

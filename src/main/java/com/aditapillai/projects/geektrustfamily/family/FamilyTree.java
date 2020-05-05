@@ -68,22 +68,6 @@ class FamilyTree implements Family {
     }
 
     @Override
-    public Optional<String> getMotherOf(String name) {
-        this.validateName(name);
-        return Optional.ofNullable(this.memberDirectory.get(name))
-                       .flatMap(person -> Optional.ofNullable(person.mother))
-                       .map(person -> person.name);
-    }
-
-    @Override
-    public Optional<String> getFatherOf(String name) {
-        this.validateName(name);
-        return Optional.ofNullable(this.memberDirectory.get(name))
-                       .flatMap(person -> Optional.ofNullable(person.father))
-                       .map(person -> person.name);
-    }
-
-    @Override
     public Optional<? extends Set<String>> getPaternalUnclesOf(String name) {
         this.validateName(name);
         Person currentPerson = this.memberDirectory.get(name);

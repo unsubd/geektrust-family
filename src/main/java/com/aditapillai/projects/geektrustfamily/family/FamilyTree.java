@@ -93,7 +93,8 @@ class FamilyTree implements Family {
                                             .stream()
                                             .filter(Person::isMale)
                                             .map(child -> child.name)
-                                            .collect(Collectors.toSet()));
+                                            .collect(Collectors.toSet()))
+                       .filter(uncles -> !uncles.isEmpty());
     }
 
     @Override
@@ -106,7 +107,8 @@ class FamilyTree implements Family {
                                             .stream()
                                             .filter(Person::isMale)
                                             .map(child -> child.name)
-                                            .collect(Collectors.toSet()));
+                                            .collect(Collectors.toSet()))
+                       .filter(uncles -> !uncles.isEmpty());
 
     }
 
@@ -120,7 +122,8 @@ class FamilyTree implements Family {
                                             .stream()
                                             .filter(Person::isFemale)
                                             .map(child -> child.name)
-                                            .collect(Collectors.toSet()));
+                                            .collect(Collectors.toSet()))
+                       .filter(aunts -> !aunts.isEmpty());
     }
 
     @Override
@@ -133,7 +136,8 @@ class FamilyTree implements Family {
                                             .stream()
                                             .filter(Person::isFemale)
                                             .map(child -> child.name)
-                                            .collect(Collectors.toSet()));
+                                            .collect(Collectors.toSet()))
+                       .filter(aunts -> !aunts.isEmpty());
 
     }
 
@@ -161,7 +165,7 @@ class FamilyTree implements Family {
         return Optional.of(Stream.concat(sistersOfSpouse, wivesOfSiblings)
                                  .map(person -> person.name)
                                  .collect(Collectors.toSet()))
-                       .filter(result -> !result.isEmpty());
+                       .filter(sistersInLaw -> !sistersInLaw.isEmpty());
     }
 
     @Override
@@ -188,7 +192,7 @@ class FamilyTree implements Family {
         return Optional.of(Stream.concat(brothersOfSpouse, husbandsOfSiblings)
                                  .map(person -> person.name)
                                  .collect(Collectors.toSet()))
-                       .filter(result -> !result.isEmpty());
+                       .filter(brothersInLaw -> !brothersInLaw.isEmpty());
     }
 
     private void validateName(String name) {

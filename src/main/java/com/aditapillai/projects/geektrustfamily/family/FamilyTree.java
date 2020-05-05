@@ -36,7 +36,7 @@ class FamilyTree implements Family {
                        .map(Person::getChildren)
                        .map(children -> children.stream()
                                                 .filter(Person::isMale)
-                                                .map(person -> person.name)
+                                                .map(son -> son.name)
                                                 .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(children -> !children.isEmpty());
     }
@@ -48,7 +48,7 @@ class FamilyTree implements Family {
                        .map(Person::getChildren)
                        .map(children -> children.stream()
                                                 .filter(Person::isFemale)
-                                                .map(person -> person.name)
+                                                .map(daughter -> daughter.name)
                                                 .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(children -> !children.isEmpty());
     }
@@ -60,8 +60,8 @@ class FamilyTree implements Family {
                        .flatMap(person -> Optional.ofNullable(person.mother))
                        .map(Person::getChildren)
                        .map(children -> children.stream()
-                                                .map(person -> person.name)
-                                                .filter(person -> !person.equals(name))
+                                                .map(child -> child.name)
+                                                .filter(child -> !child.equals(name))
                                                 .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(children -> !children.isEmpty());
 
@@ -73,13 +73,13 @@ class FamilyTree implements Family {
         Person currentPerson = this.memberDirectory.get(name);
         return Optional.of(currentPerson)
                        .flatMap(person -> Optional.ofNullable(person.father))
-                       .flatMap(person -> Optional.ofNullable(person.father))
-                       .map(person -> person.getChildren()
-                                            .stream()
-                                            .filter(Person::isMale)
-                                            .filter(aunt -> !aunt.equals(currentPerson.father))
-                                            .map(child -> child.name)
-                                            .collect(Collectors.toCollection(LinkedHashSet::new)))
+                       .flatMap(father -> Optional.ofNullable(father.father))
+                       .map(grandFather -> grandFather.getChildren()
+                                                      .stream()
+                                                      .filter(Person::isMale)
+                                                      .filter(uncle -> !uncle.equals(currentPerson.father))
+                                                      .map(child -> child.name)
+                                                      .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(uncles -> !uncles.isEmpty());
     }
 
@@ -88,12 +88,12 @@ class FamilyTree implements Family {
         this.validateName(name);
         return Optional.of(this.memberDirectory.get(name))
                        .flatMap(person -> Optional.ofNullable(person.mother))
-                       .flatMap(person -> Optional.ofNullable(person.mother))
-                       .map(person -> person.getChildren()
-                                            .stream()
-                                            .filter(Person::isMale)
-                                            .map(child -> child.name)
-                                            .collect(Collectors.toCollection(LinkedHashSet::new)))
+                       .flatMap(mother -> Optional.ofNullable(mother.mother))
+                       .map(grandMother -> grandMother.getChildren()
+                                                      .stream()
+                                                      .filter(Person::isMale)
+                                                      .map(child -> child.name)
+                                                      .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(uncles -> !uncles.isEmpty());
 
     }
@@ -103,12 +103,12 @@ class FamilyTree implements Family {
         this.validateName(name);
         return Optional.of(this.memberDirectory.get(name))
                        .flatMap(person -> Optional.ofNullable(person.father))
-                       .flatMap(person -> Optional.ofNullable(person.father))
-                       .map(person -> person.getChildren()
-                                            .stream()
-                                            .filter(Person::isFemale)
-                                            .map(child -> child.name)
-                                            .collect(Collectors.toCollection(LinkedHashSet::new)))
+                       .flatMap(father -> Optional.ofNullable(father.father))
+                       .map(grandFather -> grandFather.getChildren()
+                                                      .stream()
+                                                      .filter(Person::isFemale)
+                                                      .map(child -> child.name)
+                                                      .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(aunts -> !aunts.isEmpty());
     }
 
@@ -118,13 +118,13 @@ class FamilyTree implements Family {
         Person currentPerson = this.memberDirectory.get(name);
         return Optional.of(currentPerson)
                        .flatMap(person -> Optional.ofNullable(person.mother))
-                       .flatMap(person -> Optional.ofNullable(person.mother))
-                       .map(person -> person.getChildren()
-                                            .stream()
-                                            .filter(Person::isFemale)
-                                            .filter(aunt -> !aunt.equals(currentPerson.mother))
-                                            .map(child -> child.name)
-                                            .collect(Collectors.toCollection(LinkedHashSet::new)))
+                       .flatMap(mother -> Optional.ofNullable(mother.mother))
+                       .map(grandMother -> grandMother.getChildren()
+                                                      .stream()
+                                                      .filter(Person::isFemale)
+                                                      .filter(aunt -> !aunt.equals(currentPerson.mother))
+                                                      .map(child -> child.name)
+                                                      .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(aunts -> !aunts.isEmpty());
 
     }
@@ -136,9 +136,9 @@ class FamilyTree implements Family {
         Stream<Person> sistersOfSpouse = Optional.of(currentPerson)
                                                  .flatMap(person -> Optional.ofNullable(person.getSpouse()))
                                                  .flatMap(spouse -> Optional.ofNullable(spouse.mother))
-                                                 .map(mother -> mother.getChildren()
-                                                                      .stream()
-                                                                      .filter(Person::isFemale))
+                                                 .map(motherInLaw -> motherInLaw.getChildren()
+                                                                                .stream()
+                                                                                .filter(Person::isFemale))
                                                  .orElse(Stream.empty());
         Stream<Person> wivesOfSiblings = Optional.of(currentPerson)
                                                  .flatMap(person -> Optional.ofNullable(person.mother))
@@ -151,7 +151,7 @@ class FamilyTree implements Family {
                                                  .orElse(Stream.empty());
 
         return Optional.of(Stream.concat(sistersOfSpouse, wivesOfSiblings)
-                                 .map(person -> person.name)
+                                 .map(sisterInLaw -> sisterInLaw.name)
                                  .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(sistersInLaw -> !sistersInLaw.isEmpty());
     }
@@ -163,9 +163,9 @@ class FamilyTree implements Family {
         Stream<Person> brothersOfSpouse = Optional.of(currentPerson)
                                                   .flatMap(person -> Optional.ofNullable(person.getSpouse()))
                                                   .flatMap(spouse -> Optional.ofNullable(spouse.mother))
-                                                  .map(mother -> mother.getChildren()
-                                                                       .stream()
-                                                                       .filter(Person::isMale))
+                                                  .map(motherInLaw -> motherInLaw.getChildren()
+                                                                                 .stream()
+                                                                                 .filter(Person::isMale))
                                                   .orElse(Stream.empty());
         Stream<Person> husbandsOfSiblings = Optional.of(currentPerson)
                                                     .flatMap(person -> Optional.ofNullable(person.mother))
@@ -178,27 +178,9 @@ class FamilyTree implements Family {
                                                     .orElse(Stream.empty());
 
         return Optional.of(Stream.concat(brothersOfSpouse, husbandsOfSiblings)
-                                 .map(person -> person.name)
+                                 .map(brotherInLaw -> brotherInLaw.name)
                                  .collect(Collectors.toCollection(LinkedHashSet::new)))
                        .filter(brothersInLaw -> !brothersInLaw.isEmpty());
-    }
-
-    private void validateName(String name) {
-        if (!this.contains(name)) {
-            throw new ApiException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);
-        }
-    }
-
-    private Woman addChildToMother(Woman mother, String childName, Gender childGender) {
-        Person child = Person.builder()
-                             .name(childName)
-                             .gender(childGender)
-                             .father(mother.getSpouse())
-                             .mother(mother)
-                             .build();
-        mother.addChild(child);
-        this.memberDirectory.put(childName, child);
-        return mother;
     }
 
     @Override
@@ -221,6 +203,24 @@ class FamilyTree implements Family {
     @Override
     public boolean contains(String name) {
         return this.memberDirectory.containsKey(name);
+    }
+
+    private void validateName(String name) {
+        if (!this.contains(name)) {
+            throw new ApiException(Errors.PERSON_NOT_FOUND_ERROR_MESSAGE);
+        }
+    }
+
+    private Woman addChildToMother(Woman mother, String childName, Gender childGender) {
+        Person child = Person.builder()
+                             .name(childName)
+                             .gender(childGender)
+                             .father(mother.getSpouse())
+                             .mother(mother)
+                             .build();
+        mother.addChild(child);
+        this.memberDirectory.put(childName, child);
+        return mother;
     }
 
     @Override

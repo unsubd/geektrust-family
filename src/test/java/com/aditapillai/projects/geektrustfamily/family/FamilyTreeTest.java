@@ -83,8 +83,9 @@ class FamilyTreeTest {
     public void getSiblings_ChildName_SiblingsReturned() {
         this.family.addChild("Queen Anga", "Prince", Gender.M);
         this.family.addChild("Queen Anga", "Princess", Gender.F);
+        this.family.addChild("Queen Anga", "Prince Mundane", Gender.M);
 
-        assertEquals(Set.of("Princess"), this.family.getSiblingsOf("Prince")
-                                                    .get());
+        assertEquals(Set.of("Princess", "Prince Mundane"), this.family.getSiblingsOf("Prince")
+                                                                      .get());
     }
 }

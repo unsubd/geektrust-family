@@ -172,11 +172,34 @@ class FamilyTreeTest {
     }
 
     @Test
-    public void getPaternalAunts_PersonNameWhoDoesNotHavePaternalAunts_PaternalAuntsReturned() {
+    public void getPaternalAunts_PersonNameWhoDoesNotHavePaternalAunts_EmptyOptionalReturned() {
         this.family.addChild("Queen Anga", "Prince", Gender.M);
 
         this.family.hostWedding("Prince", "Princess Galaxy");
         this.family.addChild("Princess Galaxy", "Child", Gender.F);
+
+        assertTrue(this.family.getPaternalAuntsOf("Child")
+                              .isEmpty());
+    }
+
+    @Test
+    public void getMaternalAunts_PersonNameWithMaternalAunts_MaternalAuntsReturned() {
+        this.family.addChild("Queen Anga", "Prince Sunshine", Gender.F);
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+
+        this.family.hostWedding("Prince Moon", "Princess");
+        this.family.addChild("Princess", "Child", Gender.F);
+
+        assertEquals(Set.of("Prince Sunshine"), this.family.getMaternalAuntsOf("Child")
+                                                           .get());
+    }
+
+    @Test
+    public void getMaternalAunts_PersonNameWhoDoesNotHaveMaternalAunts_EmptyOptionalReturned() {
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+
+        this.family.hostWedding("Prince Moon", "Princess");
+        this.family.addChild("Princess", "Child", Gender.F);
 
         assertTrue(this.family.getPaternalAuntsOf("Child")
                               .isEmpty());

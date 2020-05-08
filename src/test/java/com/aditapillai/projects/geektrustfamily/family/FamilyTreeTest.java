@@ -274,7 +274,19 @@ class FamilyTreeTest {
     }
 
     @Test
-    public void contains_NonMembersOfFamily_FalseReturned() {
+    public void contains_NonMemberOfFamily_FalseReturned() {
         assertFalse(this.family.contains("Supreme King Sun"));
+    }
+
+    @Test
+    public void getPerson_MemberOfFamily_PersonReturned() {
+        assertEquals("King Shan", (this.family.getPerson("King Shan")
+                                              .get().name));
+    }
+
+    @Test
+    public void getPerson_NonMemberOfFamily_FalseReturned() {
+        assertTrue(this.family.getPerson("Supreme King Sun")
+                              .isEmpty());
     }
 }

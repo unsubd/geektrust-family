@@ -129,6 +129,28 @@ class PersonTest {
     }
 
     @Test
+    public void marryCheckChildrenOfMan_MotherHasChildren_ChildrenAccessibleToFromMan() {
+        Woman wife = (Woman) Person.builder()
+                                   .name("Queen")
+                                   .gender(Gender.F)
+                                   .build();
+        wife.addChild(Person.builder()
+                            .name("child")
+                            .gender(Gender.F)
+                            .build());
+        Person husband = Person.builder()
+                               .name("King")
+                               .gender(Gender.M)
+                               .build();
+
+        husband.marry(wife);
+        Assertions.assertTrue(husband.getChildren()
+                                     .stream()
+                                     .map(person -> person.name)
+                                     .anyMatch("child"::equals));
+    }
+
+    @Test
     public void isMale_MalePerson_TrueReturned() {
         Person person = Person.builder()
                               .name("King")

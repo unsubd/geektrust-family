@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FamilyTreeTest {
 
@@ -267,5 +266,15 @@ class FamilyTreeTest {
                               .equals(Errors.ONE_MEMBER_SHOULD_BE_FAMILY_ERROR_MESSAGE);
         }
         assertTrue(result);
+    }
+
+    @Test
+    public void contains_MemberOfFamily_TrueReturned() {
+        assertTrue(this.family.contains("King Shan"));
+    }
+
+    @Test
+    public void contains_NonMembersOfFamily_FalseReturned() {
+        assertFalse(this.family.contains("Supreme King Sun"));
     }
 }

@@ -1,6 +1,7 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
+import com.aditapillai.projects.geektrustfamily.errors.ApiException;
 import com.aditapillai.projects.geektrustfamily.errors.Errors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -85,7 +86,7 @@ class PersonTest {
                                                       .gender(Gender.F)
                                                       .build())
                                         .build();
-        } catch (RuntimeException exception) {
+        } catch (ApiException exception) {
             result = exception.getMessage()
                               .equals(Errors.FATHER_SHOULD_BE_A_MAN_ERROR_MESSAGE);
         }
@@ -105,7 +106,7 @@ class PersonTest {
                                                       .gender(Gender.M)
                                                       .build())
                                         .build();
-        } catch (RuntimeException exception) {
+        } catch (ApiException exception) {
             result = exception.getMessage()
                               .equals(Errors.MOTHER_SHOULD_BE_A_WOMAN_ERROR_MESSAGE);
         }

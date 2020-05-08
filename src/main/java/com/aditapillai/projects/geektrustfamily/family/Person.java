@@ -1,6 +1,7 @@
 package com.aditapillai.projects.geektrustfamily.family;
 
 import com.aditapillai.projects.geektrustfamily.constants.Gender;
+import com.aditapillai.projects.geektrustfamily.errors.ApiException;
 import com.aditapillai.projects.geektrustfamily.errors.Errors;
 
 import java.util.Objects;
@@ -17,10 +18,10 @@ public abstract class Person {
         this.name = name;
 
         if (father != null && !(father instanceof Man)) {
-            throw new RuntimeException(Errors.FATHER_SHOULD_BE_A_MAN_ERROR_MESSAGE);
+            throw new ApiException(Errors.FATHER_SHOULD_BE_A_MAN_ERROR_MESSAGE);
         }
         if (mother != null && !(mother instanceof Woman)) {
-            throw new RuntimeException(Errors.MOTHER_SHOULD_BE_A_WOMAN_ERROR_MESSAGE);
+            throw new ApiException(Errors.MOTHER_SHOULD_BE_A_WOMAN_ERROR_MESSAGE);
         }
 
         this.father = (Man) father;

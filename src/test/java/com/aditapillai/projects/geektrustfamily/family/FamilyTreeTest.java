@@ -6,7 +6,6 @@ import com.aditapillai.projects.geektrustfamily.errors.Errors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,10 +65,8 @@ class FamilyTreeTest {
         this.family.addChild("Queen Anga", "Princess", Gender.F);
         Set<String> sons = this.family.getSonsOf("King Shan")
                                       .get();
-        Set<String> expectedSons = new HashSet<>();
-        expectedSons.add("Prince");
 
-        assertEquals(expectedSons, sons);
+        assertEquals(Set.of("Prince"), sons);
     }
 
     @Test
@@ -78,9 +75,16 @@ class FamilyTreeTest {
         this.family.addChild("Queen Anga", "Princess", Gender.F);
         Set<String> sons = this.family.getDaughtersOf("Queen Anga")
                                       .get();
-        Set<String> expectedSons = new HashSet<>();
-        expectedSons.add("Princess");
 
-        assertEquals(expectedSons, sons);
+        assertEquals(Set.of("Princess"), sons);
+    }
+
+    @Test
+    public void getSiblings_ChildName_SiblingsReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+
+        assertEquals(Set.of("Princess"), this.family.getSiblingsOf("Prince")
+                                                    .get());
     }
 }

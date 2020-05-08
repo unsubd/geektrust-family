@@ -135,4 +135,27 @@ class FamilyTreeTest {
         assertTrue(this.family.getPaternalUnclesOf("Child")
                               .isEmpty());
     }
+
+    @Test
+    public void getMaternalUncles_PersonNameWhoHasMaternalUncles_MaternalUnclesReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+
+        this.family.hostWedding("Prince Mundane", "Princess");
+        this.family.addChild("Princess", "Child", Gender.F);
+
+        assertEquals(Set.of("Prince"), this.family.getMaternalUnclesOf("Child")
+                                                  .get());
+    }
+
+    @Test
+    public void getMaternalUncles_PersonNameWhoDoesNotHaveMaternalUncles_EmptyOptionalReturned() {
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+
+        this.family.hostWedding("Prince Mundane", "Princess");
+        this.family.addChild("Princess", "Child", Gender.F);
+
+        assertTrue(this.family.getMaternalUnclesOf("Child")
+                              .isEmpty());
+    }
 }

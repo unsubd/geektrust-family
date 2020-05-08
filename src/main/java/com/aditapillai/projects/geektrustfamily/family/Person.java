@@ -13,7 +13,7 @@ public abstract class Person {
     private Person spouse;
 
     protected Person(String name, Person father, Person mother) {
-        Objects.requireNonNull(name);
+        Objects.requireNonNull(name, Errors.NAME_IS_MANDATORY_ERROR_MESSAGE);
         this.name = name;
 
         if (father != null && !(father instanceof Man)) {
@@ -55,7 +55,7 @@ public abstract class Person {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Person.class == o.getClass()) return false;
         Person person = (Person) o;
         return name.equals(person.name);
     }

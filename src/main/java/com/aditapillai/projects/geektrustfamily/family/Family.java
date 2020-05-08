@@ -30,4 +30,6 @@ public interface Family {
     void hostWedding(String husbandName, String wifeName);
 
     boolean contains(String name);
+
+    Optional<Person> getPerson(String name);
 }

@@ -7,4 +7,5 @@ public interface Errors {
     String MOTHER_SHOULD_BE_A_WOMAN_ERROR_MESSAGE = "Mother should be a Woman";
     String UNKNOWN_OPERATION_ERROR_MESSAGE = "UNSUPPORTED_OPERATION";
     String NAME_IS_MANDATORY_ERROR_MESSAGE = "Name of a person is mandatory";
+    String ONE_MEMBER_SHOULD_BE_FAMILY_ERROR_MESSAGE = "At least one of the Husband and Wife should be a part of the family";
 }

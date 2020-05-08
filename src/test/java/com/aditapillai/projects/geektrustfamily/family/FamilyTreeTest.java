@@ -246,4 +246,14 @@ class FamilyTreeTest {
         assertEquals(Set.of("Prince"), this.family.getBrothersInLawOf("Princess")
                                                   .get());
     }
+
+    @Test
+    public void hostWedding_ExistingPeople_Success() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+        this.family.hostWedding("Prince", "Princess Sunshine");
+
+        assertEquals("Prince", this.family.getPerson("Princess Sunshine")
+                                          .get()
+                                          .getSpouse().name);
+    }
 }

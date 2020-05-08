@@ -187,6 +187,9 @@ class FamilyTree implements Family {
 
     @Override
     public void hostWedding(String husbandName, String wifeName) {
+        if (!this.contains(husbandName) && !this.contains(wifeName)) {
+            throw new ApiException(Errors.ONE_MEMBER_SHOULD_BE_FAMILY_ERROR_MESSAGE);
+        }
         Person husband = this.memberDirectory.getOrDefault(husbandName, Person.builder()
                                                                               .name(husbandName)
                                                                               .gender(Gender.M)
@@ -205,6 +208,11 @@ class FamilyTree implements Family {
     @Override
     public boolean contains(String name) {
         return this.memberDirectory.containsKey(name);
+    }
+
+    @Override
+    public Optional<Person> getPerson(String name) {
+        return Optional.ofNullable(this.memberDirectory.get(name));
     }
 
     private void validateName(String name) {

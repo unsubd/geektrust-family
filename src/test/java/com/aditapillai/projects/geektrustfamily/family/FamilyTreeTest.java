@@ -204,4 +204,25 @@ class FamilyTreeTest {
         assertTrue(this.family.getPaternalAuntsOf("Child")
                               .isEmpty());
     }
+
+    @Test
+    public void getSistersInLaw_ManWithSistersInLaw_SistersInLawReturned() {
+        this.family.addChild("Queen Anga", "Princess Sunshine", Gender.F);
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+        this.family.hostWedding("Prince Moon", "Princess");
+
+        assertEquals(Set.of("Princess Sunshine"), this.family.getSistersInLawOf("Prince Moon")
+                                                             .get());
+    }
+
+    @Test
+    public void getSistersInLaw_WomanWithSistersInLaw_SistersInLawReturned() {
+        this.family.addChild("Queen Anga", "Princess Sunshine", Gender.F);
+        this.family.addChild("Queen Anga", "Princess Stardust", Gender.F);
+        this.family.addChild("Queen Anga", "Prince Moon", Gender.M);
+        this.family.hostWedding("Prince Moon", "Princess");
+
+        assertEquals(Set.of("Princess Sunshine", "Princess Stardust"), this.family.getSistersInLawOf("Princess")
+                                                                                  .get());
+    }
 }

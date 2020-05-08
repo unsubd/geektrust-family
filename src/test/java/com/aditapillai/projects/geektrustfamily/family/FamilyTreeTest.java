@@ -256,4 +256,16 @@ class FamilyTreeTest {
                                           .get()
                                           .getSpouse().name);
     }
+
+    @Test
+    public void hostWedding_PeopleNotPartOfFamily_ExceptionThrown() {
+        boolean result = true;
+        try {
+            this.family.hostWedding("Prince", "Princess Sunshine");
+        } catch (ApiException exception) {
+            result = exception.getMessage()
+                              .equals(Errors.ONE_MEMBER_SHOULD_BE_FAMILY_ERROR_MESSAGE);
+        }
+        assertTrue(result);
+    }
 }

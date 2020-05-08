@@ -70,6 +70,14 @@ class FamilyTreeTest {
     }
 
     @Test
+    public void getDaughters_FatherNameWithNoSons_EmptyOptionalReturned() {
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+
+        assertTrue(this.family.getSonsOf("King Shan")
+                              .isEmpty());
+    }
+
+    @Test
     public void getDaughters_MotherName_DaughtersReturned() {
         this.family.addChild("Queen Anga", "Prince", Gender.M);
         this.family.addChild("Queen Anga", "Princess", Gender.F);
@@ -80,6 +88,14 @@ class FamilyTreeTest {
     }
 
     @Test
+    public void getDaughters_MotherNameWithNoDaughters_EmptyOptionalReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+
+        assertTrue(this.family.getDaughtersOf("Queen Anga")
+                              .isEmpty());
+    }
+
+    @Test
     public void getSiblings_ChildName_SiblingsReturned() {
         this.family.addChild("Queen Anga", "Prince", Gender.M);
         this.family.addChild("Queen Anga", "Princess", Gender.F);
@@ -87,5 +103,36 @@ class FamilyTreeTest {
 
         assertEquals(Set.of("Princess", "Prince Mundane"), this.family.getSiblingsOf("Prince")
                                                                       .get());
+    }
+
+    @Test
+    public void getSiblings_ChildNameWithNoSiblings_EmptyOptionalReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+
+        assertTrue(this.family.getSiblingsOf("Prince")
+                              .isEmpty());
+    }
+
+    @Test
+    public void getPaternalUncles_PersonNameWhoHasPaternalUncles_PaternalUnclesReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+        this.family.addChild("Queen Anga", "Prince Mundane", Gender.M);
+
+        this.family.hostWedding("Prince Mundane", "Princess Galaxy");
+        this.family.addChild("Princess Galaxy", "Child", Gender.F);
+
+        assertEquals(Set.of("Prince"), this.family.getPaternalUnclesOf("Child")
+                                                  .get());
+    }
+
+    @Test
+    public void getPaternalUncles_PersonNameWhoDoesNotHavePaternalUncles_EmptyOptionalReturned() {
+        this.family.addChild("Queen Anga", "Prince Mundane", Gender.M);
+
+        this.family.hostWedding("Prince Mundane", "Princess Galaxy");
+        this.family.addChild("Princess Galaxy", "Child", Gender.F);
+
+        assertTrue(this.family.getPaternalUnclesOf("Child")
+                              .isEmpty());
     }
 }

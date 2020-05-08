@@ -166,7 +166,8 @@ class FamilyTree implements Family {
                                                   .flatMap(spouse -> Optional.ofNullable(spouse.mother))
                                                   .map(motherInLaw -> motherInLaw.getChildren()
                                                                                  .stream()
-                                                                                 .filter(Person::isMale))
+                                                                                 .filter(Person::isMale)
+                                                                                 .filter(person -> !Objects.equals(currentPerson.getSpouse(), person)))
                                                   .orElse(Stream.empty());
         Stream<Person> husbandsOfSiblings = Optional.of(currentPerson)
                                                     .flatMap(person -> Optional.ofNullable(person.mother))

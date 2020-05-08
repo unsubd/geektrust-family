@@ -225,4 +225,25 @@ class FamilyTreeTest {
         assertEquals(Set.of("Princess Sunshine", "Princess Stardust"), this.family.getSistersInLawOf("Princess")
                                                                                   .get());
     }
+
+    @Test
+    public void getBrothersInLaw_ManWithBrothersInLaw_BrothersInLawReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+        this.family.addChild("Queen Anga", "Princess", Gender.F);
+        this.family.hostWedding("Prince Moon", "Princess");
+
+        assertEquals(Set.of("Prince"), this.family.getBrothersInLawOf("Prince Moon")
+                                                  .get());
+    }
+
+    @Test
+    public void getBrothersInLaw_WomanWithBrothersInLaw_BrothersInLawReturned() {
+        this.family.addChild("Queen Anga", "Prince", Gender.M);
+        this.family.addChild("Queen Anga", "Princess Stardust", Gender.F);
+        this.family.addChild("Queen Anga", "Prince Moon", Gender.M);
+        this.family.hostWedding("Prince Moon", "Princess");
+
+        assertEquals(Set.of("Prince"), this.family.getBrothersInLawOf("Princess")
+                                                  .get());
+    }
 }

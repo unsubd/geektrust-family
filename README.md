@@ -1,10 +1,7 @@
 # geektrust-family
 Solution to Family from geektrust
 
-To run the app:
+The problem statement is present in [Geektrust_in_family_java.pdf](Geektrust_in_family_java.pdf)
 
-1. run `mvn clean package` to create a jar.
-
-2. run `java -jar target\geektrust.jar <path_to_input_file>`
-
-3. The result should be printed on the commandline
+My Badges
+![My Badges](family-badges.png)
